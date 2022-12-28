@@ -1,0 +1,28 @@
+{
+  "title": "Evmos Block Explorer",
+  "network": "compose_1-1",
+  "icon": "/images/logo-light.svg",
+  "logo": {
+    "default": "/images/logo-light.svg"
+  },
+  "prefix": {
+    "consensus": "posevalcons",
+    "validator": "posevaloper",
+    "account": "pose"
+  },
+  "genesis": {
+    "time": "2021-07-13T08:00:00",
+    "height": 1
+  },
+  "primaryTokenUnit": "apose",
+  "votingPowerTokenUnit": "apose",
+  "tokenUnits": {
+    "atevmos": {
+      "display": "pose",
+      "exponent": 18
+    }
+  },
+  "extra": {
+    "profile": false
+  }
+}
