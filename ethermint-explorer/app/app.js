@@ -27,7 +27,7 @@ angular.module('ethExplorer', ['ngRoute','ui.bootstrap'])
     }])
     .run(function($rootScope) {
         var web3 = new Web3();
-        var eth_node_url = 'http://95.217.51.150:8545'; // TODO: remote URL
+        var eth_node_url = 'http://3.142.68.65:8545'; // TODO: remote URL
 	web3.setProvider(new web3.providers.HttpProvider(eth_node_url));
         $rootScope.web3 = web3;
         function sleepFor( sleepDuration ){

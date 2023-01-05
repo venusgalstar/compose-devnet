@@ -142,4 +142,4 @@ fi
 
 # Start the node (remove the --pruning=nothing flag if historical queries are not needed)
 #composed start --pruning=nothing "$TRACE" --gas-prices 0.00001apose --gas-adjustment 1.3 --log_level $LOGLEVEL --json-rpc.api eth,txpool,personal,net,debug,web3 --api.enable --home "$HOMEDIR"
-composed start --pruning=nothing "$TRACE" --rpc.laddr tcp://127.0.0.1:26657 --gas-prices 0.00001apose --gas-adjustment 1.3 --log_level $LOGLEVEL --json-rpc.api eth,txpool,personal,net,debug,web3 --api.enable --home "$HOMEDIR"
+composed start --pruning=nothing "$TRACE" --rpc.laddr tcp://0.0.0.0:26657 --gas-prices 0.00001apose --gas-adjustment 1.3 --log_level $LOGLEVEL --json-rpc.api eth,txpool,personal,net,debug,web3 --api.enable --home "$HOMEDIR"

@@ -19250,6 +19250,32 @@ export type ChainIdQuery = { genesis: Array<(
     & { chainId: Genesis['chain_id'] }
   )> };
 
+export type MarketDataQueryVariables = Exact<{
+  denom?: Maybe<Scalars['String']>;
+}>;
+
+
+export type MarketDataQuery = { communityPool: Array<(
+    { __typename?: 'community_pool' }
+    & Pick<Community_Pool, 'coins'>
+  )>, inflation: Array<(
+    { __typename?: 'inflation' }
+    & Pick<Inflation, 'value'>
+  )>, tokenPrice: Array<(
+    { __typename?: 'token_price' }
+    & Pick<Token_Price, 'price'>
+    & { marketCap: Token_Price['market_cap'] }
+  )>, supply: Array<(
+    { __typename?: 'supply' }
+    & Pick<Supply, 'coins'>
+  )>, bondedTokens: Array<(
+    { __typename?: 'staking_pool' }
+    & Pick<Staking_Pool, 'bonded_tokens'>
+  )>, distributionParams: Array<(
+    { __typename?: 'distribution_params' }
+    & Pick<Distribution_Params, 'params'>
+  )> };
+
 export type GetMessagesByAddressQueryVariables = Exact<{
   address?: Maybe<Scalars['_text']>;
   limit?: Maybe<Scalars['bigint']>;
@@ -20333,6 +20359,57 @@ export function useChainIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Ch
 export type ChainIdQueryHookResult = ReturnType<typeof useChainIdQuery>;
 export type ChainIdLazyQueryHookResult = ReturnType<typeof useChainIdLazyQuery>;
 export type ChainIdQueryResult = Apollo.QueryResult<ChainIdQuery, ChainIdQueryVariables>;
+export const MarketDataDocument = gql`
+    query MarketData($denom: String) {
+  communityPool: community_pool(order_by: {height: desc}, limit: 1) {
+    coins
+  }
+  inflation: inflation(order_by: {height: desc}, limit: 1) {
+    value
+  }
+  tokenPrice: token_price(where: {unit_name: {_eq: $denom}}) {
+    marketCap: market_cap
+    price
+  }
+  supply {
+    coins
+  }
+  bondedTokens: staking_pool(order_by: {height: desc}, limit: 1) {
+    bonded_tokens
+  }
+  distributionParams: distribution_params {
+    params
+  }
+}
+    `;
+
+/**
+ * __useMarketDataQuery__
+ *
+ * To run a query within a React component, call `useMarketDataQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMarketDataQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMarketDataQuery({
+ *   variables: {
+ *      denom: // value for 'denom'
+ *   },
+ * });
+ */
+export function useMarketDataQuery(baseOptions?: Apollo.QueryHookOptions<MarketDataQuery, MarketDataQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<MarketDataQuery, MarketDataQueryVariables>(MarketDataDocument, options);
+      }
+export function useMarketDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MarketDataQuery, MarketDataQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<MarketDataQuery, MarketDataQueryVariables>(MarketDataDocument, options);
+        }
+export type MarketDataQueryHookResult = ReturnType<typeof useMarketDataQuery>;
+export type MarketDataLazyQueryHookResult = ReturnType<typeof useMarketDataLazyQuery>;
+export type MarketDataQueryResult = Apollo.QueryResult<MarketDataQuery, MarketDataQueryVariables>;
 export const GetMessagesByAddressDocument = gql`
     query GetMessagesByAddress($address: _text, $limit: bigint = 50, $offset: bigint = 0, $types: _text = "{}") {
   messagesByAddress: messages_by_address(
